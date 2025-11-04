@@ -1,0 +1,7 @@
+{
+  "name": "Audio Video Looper Control",
+  "description": "An interface to control and mix video and audio sources, inspired by an Android Studio layout. It allows selecting a video file, managing microphone and audio output devices, adjusting volumes and delays, and configuring loop settings.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
