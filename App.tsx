@@ -6,7 +6,7 @@ import { Bargraph } from './components/Bargraph';
 import { Button } from './components/Button';
 import { NumberInput } from './components/NumberInput';
 import { FilePicker } from './components/FilePicker';
-import { Mic, Video, Volume2, Save, Play, RefreshCw, Layers, Hash } from './components/Icons';
+import { Mic, Video, Volume2, Save, Play, RefreshCw, Layers, Hash, Clock } from './components/Icons';
 
 const STORAGE_KEY = 'audioVideoLooperState';
 
@@ -20,6 +20,7 @@ interface AppState {
     loopVolume: number;
     numLoops: number;
     numTaps: number;
+    tapTempo: number;
 }
 
 const DEFAULTS: AppState = {
@@ -32,6 +33,7 @@ const DEFAULTS: AppState = {
     loopVolume: 90,
     numLoops: 1,
     numTaps: 0,
+    tapTempo: 120,
 };
 
 const getInitialState = (): AppState => {
@@ -100,11 +102,14 @@ const App: React.FC = () => {
             if (file) {
                 const loopsMatch = file.name.match(/NbLoop(\d+)/i);
                 const tapsMatch = file.name.match(/Tap(\d+)/i);
+                const tempoMatch = file.name.match(/tempo(\d+)/i);
                 newState.numLoops = loopsMatch?.[1] ? Math.min(10, Math.max(0, parseInt(loopsMatch[1], 10))) : DEFAULTS.numLoops;
                 newState.numTaps = tapsMatch?.[1] ? Math.min(16, Math.max(0, parseInt(tapsMatch[1], 10))) : DEFAULTS.numTaps;
+                newState.tapTempo = tempoMatch?.[1] ? Math.min(300, Math.max(30, parseInt(tempoMatch[1], 10))) : DEFAULTS.tapTempo;
             } else {
                 newState.numLoops = DEFAULTS.numLoops;
                 newState.numTaps = DEFAULTS.numTaps;
+                newState.tapTempo = DEFAULTS.tapTempo;
             }
             return newState;
         });
@@ -203,6 +208,14 @@ const App: React.FC = () => {
                                     min={0} 
                                     max={16} 
                                     icon={<Hash />}
+                                />
+                                <NumberInput
+                                    label="Tap Tempo"
+                                    value={state.tapTempo}
+                                    onChange={v => setState(s => ({...s, tapTempo: v}))}
+                                    min={30}
+                                    max={300}
+                                    icon={<Clock />}
                                 />
                             </div>
                         </Card>

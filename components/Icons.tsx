@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 const iconProps = {
@@ -65,6 +64,13 @@ export const Hash: React.FC = () => (
         <line x1="4" y1="15" x2="20" y2="15"></line>
         <line x1="10" y1="3" x2="8" y2="21"></line>
         <line x1="16" y1="3" x2="14" y2="21"></line>
+    </svg>
+);
+
+export const Clock: React.FC = () => (
+    <svg {...iconProps} viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="10"></circle>
+        <polyline points="12 6 12 12 16 14"></polyline>
     </svg>
 );
 
