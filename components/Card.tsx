@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface CardProps {
@@ -9,12 +8,12 @@ interface CardProps {
 
 export const Card: React.FC<CardProps> = ({ title, icon, children }) => {
     return (
-        <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl shadow-lg p-6">
+        <div className="bg-[#1E1F22] border border-gray-700/50 rounded-2xl p-6">
             <div className="flex items-center mb-4">
-                <span className="text-cyan-400 mr-3">{icon}</span>
-                <h2 className="text-xl font-semibold text-white">{title}</h2>
+                <span className="text-[#A5C9FF] mr-3">{icon}</span>
+                <h2 className="text-lg font-medium text-white">{title}</h2>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-6">
                 {children}
             </div>
         </div>

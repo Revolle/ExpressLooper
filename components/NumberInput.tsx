@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface NumberInputProps {
@@ -22,7 +21,7 @@ export const NumberInput: React.FC<NumberInputProps> = ({ label, value, onChange
 
     return (
         <div>
-            <label htmlFor={label} className="block text-sm font-medium text-gray-300 mb-2">{label}</label>
+            <label htmlFor={label} className="block text-sm font-medium text-gray-300 mb-1">{label}</label>
             <div className="relative">
                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
                     {icon}
@@ -34,7 +33,7 @@ export const NumberInput: React.FC<NumberInputProps> = ({ label, value, onChange
                     onChange={handleChange}
                     min={min}
                     max={max}
-                    className="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-cyan-500 focus:border-cyan-500 block w-full p-2.5 pl-10"
+                    className="bg-gray-700/50 border-b-2 border-gray-600 text-white text-base rounded-t-lg focus:ring-0 focus:border-b-2 focus:border-[#A5C9FF] block w-full py-3 pr-3 pl-10"
                 />
             </div>
         </div>

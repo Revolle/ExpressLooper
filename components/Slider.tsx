@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface SliderProps {
@@ -14,54 +13,62 @@ export const Slider: React.FC<SliderProps> = ({ label, value, onChange, min = 0,
     
     return (
         <div>
-            <label className="flex justify-between items-center text-sm font-medium text-gray-300 mb-2">
+            <label className="flex justify-between items-center text-sm font-medium text-[#C4C7C5] mb-2">
                 <span>{label}</span>
-                <span className="text-cyan-400 font-semibold">{value}</span>
+                <span className="text-[#A5C9FF] font-semibold">{value}</span>
             </label>
-            <div className="relative">
+            <div className="relative h-8 flex items-center">
                 <input
                     type="range"
                     min={min}
                     max={max}
                     value={value}
                     onChange={onChange}
-                    className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer slider-thumb"
-                    style={{ backgroundSize: `${percentage}% 100%` }}
+                    className="w-full h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer slider-thumb"
                 />
             </div>
              <style>{`
                 .slider-thumb {
                     -webkit-appearance: none;
                     appearance: none;
-                    background-color: #22d3ee;
-                    background-image: linear-gradient(to right, #22d3ee, #06b6d4);
-                    background-repeat: no-repeat;
+                    background-color: transparent;
+                }
+                .slider-thumb::-webkit-slider-runnable-track {
+                    height: 4px;
+                    background-image: linear-gradient(to right, #A5C9FF ${percentage}%, #444746 ${percentage}%);
+                    border-radius: 2px;
+                }
+                .slider-thumb::-moz-range-track {
+                     height: 4px;
+                    background-image: linear-gradient(to right, #A5C9FF ${percentage}%, #444746 ${percentage}%);
+                    border-radius: 2px;
                 }
                 .slider-thumb::-webkit-slider-thumb {
                     -webkit-appearance: none;
                     appearance: none;
-                    width: 16px;
-                    height: 16px;
-                    background: #f0f9ff;
+                    margin-top: -8px;
+                    width: 20px;
+                    height: 20px;
+                    background: #A5C9FF;
                     border-radius: 50%;
                     cursor: pointer;
-                    border: 2px solid #0891b2;
-                    transition: background .2s ease-in-out;
+                    border: none;
+                    transition: all .2s ease-in-out;
+                }
+                 .slider-thumb:focus::-webkit-slider-thumb {
+                    box-shadow: 0 0 0 8px rgba(165, 201, 255, 0.25);
                 }
                 .slider-thumb::-moz-range-thumb {
-                    width: 16px;
-                    height: 16px;
-                    background: #f0f9ff;
+                    width: 20px;
+                    height: 20px;
+                    background: #A5C9FF;
                     border-radius: 50%;
                     cursor: pointer;
-                    border: 2px solid #0891b2;
-                    transition: background .2s ease-in-out;
+                    border: none;
+                    transition: all .2s ease-in-out;
                 }
-                .slider-thumb::-webkit-slider-thumb:hover {
-                    background: #e0f2fe;
-                }
-                .slider-thumb::-moz-range-thumb:hover {
-                    background: #e0f2fe;
+                .slider-thumb:focus::-moz-range-thumb {
+                    box-shadow: 0 0 0 8px rgba(165, 201, 255, 0.25);
                 }
             `}</style>
         </div>

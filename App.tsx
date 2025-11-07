@@ -6,7 +6,8 @@ import { Bargraph } from './components/Bargraph';
 import { Button } from './components/Button';
 import { NumberInput } from './components/NumberInput';
 import { FilePicker } from './components/FilePicker';
-import { Mic, Video, Volume2, Save, Play, RefreshCw, Layers, Hash, Clock } from './components/Icons';
+import { Mic, Video, Volume2, Save, Play, RefreshCw, Layers, Hash, Clock, Android } from './components/Icons';
+import { InstructionsModal } from './components/InstructionsModal';
 
 const STORAGE_KEY = 'audioVideoLooperState';
 
@@ -55,6 +56,7 @@ const App: React.FC = () => {
     const [micDevices, setMicDevices] = useState<MediaDeviceInfo[]>([]);
     const [audioOutputDevices, setAudioOutputDevices] = useState<MediaDeviceInfo[]>([]);
     const [micLevel, setMicLevel] = useState(0);
+    const [isInstructionsModalOpen, setIsInstructionsModalOpen] = useState(false);
 
     useEffect(() => {
         const getDevices = async () => {
@@ -66,7 +68,6 @@ const App: React.FC = () => {
                 setMicDevices(audioInputs);
                 setAudioOutputDevices(audioOutputs);
                 
-                // Set default devices if not already set from saved state
                 setState(s => ({
                     ...s,
                     selectedMic: s.selectedMic || (audioInputs[0]?.deviceId || ''),
@@ -156,10 +157,9 @@ const App: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen p-4 sm:p-6 lg:p-8">
-            <header className="text-center mb-8">
-                <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">Audio Video Looper</h1>
-                <p className="mt-2 text-lg text-gray-400">Advanced Mixing Control Panel</p>
+        <div className="min-h-screen p-4 sm:p-6 lg:p-8 bg-[#111114] text-[#E3E2E6]">
+            <header className="max-w-7xl mx-auto mb-6">
+                <h1 className="text-2xl font-medium tracking-tight text-white">Audio Video Looper</h1>
             </header>
             
             <main className="max-w-7xl mx-auto">
@@ -167,7 +167,7 @@ const App: React.FC = () => {
                     <div className="space-y-6">
                         <Card title="Video Source" icon={<Video />}>
                             <FilePicker onFileChange={handleFileChange} />
-                            {state.videoFileName && <p className="mt-4 text-sm text-gray-300">Selected: <span className="font-medium text-cyan-400">{state.videoFileName}</span></p>}
+                            {state.videoFileName && <p className="mt-4 text-sm text-gray-300">Selected: <span className="font-medium text-[#A5C9FF]">{state.videoFileName}</span></p>}
                         </Card>
                         
                         <Card title="Microphone Input" icon={<Mic />}>
@@ -222,11 +222,13 @@ const App: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+                <div className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
                     <Button onClick={handleStartLooper} variant="primary" size="lg" icon={<Play />}>Start Looper</Button>
                     <Button onClick={handleSaveLoops} variant="secondary" size="lg" icon={<Save />}>Save Loops</Button>
+                    <Button onClick={() => setIsInstructionsModalOpen(true)} variant="tertiary" size="lg" icon={<Android />}>Build for Android</Button>
                 </div>
             </main>
+            <InstructionsModal isOpen={isInstructionsModalOpen} onClose={() => setIsInstructionsModalOpen(false)} />
         </div>
     );
 };

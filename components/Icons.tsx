@@ -74,6 +74,14 @@ export const Clock: React.FC = () => (
     </svg>
 );
 
+export const Android: React.FC = () => (
+    <svg {...iconProps} viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M14 4L10 4M12 14V4M17 14H7C5.34315 14 4 15.3431 4 17V18C4 19.6569 5.34315 21 7 21H17C18.6569 21 20 19.6569 20 18V17C20 15.3431 18.6569 14 17 14Z" />
+        <path d="M8 8.5C8.27614 8.5 8.5 8.27614 8.5 8C8.5 7.72386 8.27614 7.5 8 7.5C7.72386 7.5 7.5 7.72386 7.5 8C7.5 8.27614 7.72386 8.5 8 8.5Z" />
+        <path d="M16 8.5C16.2761 8.5 16.5 8.27614 16.5 8C16.5 7.72386 16.2761 7.5 16 7.5C15.7238 7.5 15.5 7.72386 15.5 8C15.5 8.27614 15.7238 8.5 16 8.5Z" />
+    </svg>
+);
+
 export const UploadCloud: React.FC<{className?: string}> = ({className}) => (
     <svg className={className || "w-6 h-6"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path>
