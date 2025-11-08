@@ -6,7 +6,7 @@ import { Bargraph } from './components/Bargraph';
 import { Button } from './components/Button';
 import { NumberInput } from './components/NumberInput';
 import { FilePicker } from './components/FilePicker';
-import { Mic, Video, Volume2, Save, Play, RefreshCw, Layers, Hash, Clock, Android } from './components/Icons';
+import { Mic, Video, Volume2, Save, Play, RefreshCw, Layers, Hash, Clock, Android, Hand } from './components/Icons';
 import { InstructionsModal } from './components/InstructionsModal';
 
 const STORAGE_KEY = 'audioVideoLooperState';
@@ -57,6 +57,7 @@ const App: React.FC = () => {
     const [audioOutputDevices, setAudioOutputDevices] = useState<MediaDeviceInfo[]>([]);
     const [micLevel, setMicLevel] = useState(0);
     const [isInstructionsModalOpen, setIsInstructionsModalOpen] = useState(false);
+    const [tapTimestamps, setTapTimestamps] = useState<number[]>([]);
 
     useEffect(() => {
         const getDevices = async () => {
@@ -156,6 +157,39 @@ const App: React.FC = () => {
         alert("Simulating microphone delay measurement.");
     };
 
+    const handleTapTempo = () => {
+        const now = Date.now();
+        
+        // Reset if last tap was more than 2 seconds ago
+        const lastTap = tapTimestamps.length > 0 ? tapTimestamps[tapTimestamps.length - 1] : 0;
+        const newTimestamps = (now - lastTap > 2000) ? [now] : [...tapTimestamps, now];
+
+        setTapTimestamps(newTimestamps);
+
+        const numTaps = newTimestamps.length;
+        
+        if (numTaps > 1) {
+            const intervals = [];
+            for (let i = 1; i < newTimestamps.length; i++) {
+                intervals.push(newTimestamps[i] - newTimestamps[i - 1]);
+            }
+
+            const averageInterval = intervals.reduce((sum, interval) => sum + interval, 0) / intervals.length;
+            
+            if (averageInterval > 0) {
+                const bpm = Math.round(60000 / averageInterval);
+                setState(s => ({
+                    ...s,
+                    tapTempo: Math.min(300, Math.max(30, bpm)),
+                    numTaps: numTaps,
+                }));
+            }
+        } else {
+             // On the first tap of a new sequence, just update the tap count
+             setState(s => ({ ...s, numTaps: 1 }));
+        }
+    };
+
     return (
         <div className="min-h-screen p-4 sm:p-6 lg:p-8 bg-[#111114] text-[#E3E2E6]">
             <header className="max-w-7xl mx-auto mb-6">
@@ -212,11 +246,17 @@ const App: React.FC = () => {
                                 <NumberInput
                                     label="Tap Tempo"
                                     value={state.tapTempo}
-                                    onChange={v => setState(s => ({...s, tapTempo: v}))}
+                                    onChange={v => {
+                                        setTapTimestamps([]); // Reset taps if user manually changes tempo
+                                        setState(s => ({...s, tapTempo: v}));
+                                    }}
                                     min={30}
                                     max={300}
                                     icon={<Clock />}
                                 />
+                                 <div className="flex items-end h-full">
+                                    <Button onClick={handleTapTempo} icon={<Hand />} size="lg" className="w-full">Tap</Button>
+                                </div>
                             </div>
                         </Card>
                     </div>

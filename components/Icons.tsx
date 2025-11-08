@@ -89,3 +89,12 @@ export const UploadCloud: React.FC<{className?: string}> = ({className}) => (
         <path d="m16 16-4-4-4 4"></path>
     </svg>
 );
+
+export const Hand: React.FC = () => (
+    <svg {...iconProps} viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path d="M18 12.5V10a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v1.4" />
+      <path d="M14 11V9a2 2 0 1 0-4 0v2" />
+      <path d="M10 10.5V5a2 2 0 1 0-4 0v9" />
+      <path d="M18 12.5a2 2 0 0 1 2 2v2.5a2 2 0 0 1-2 2h-4.5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h1.5" />
+    </svg>
+);

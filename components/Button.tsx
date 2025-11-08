@@ -6,9 +6,10 @@ interface ButtonProps {
     variant?: 'primary' | 'secondary' | 'tertiary';
     size?: 'md' | 'lg';
     icon?: React.ReactNode;
+    className?: string;
 }
 
-export const Button: React.FC<ButtonProps> = ({ onClick, children, variant = 'secondary', size = 'md', icon }) => {
+export const Button: React.FC<ButtonProps> = ({ onClick, children, variant = 'secondary', size = 'md', icon, className }) => {
     const baseClasses = 'inline-flex items-center justify-center font-medium rounded-full transition-colors duration-200 ease-in-out focus:outline-none focus:ring-4';
     
     const variantClasses = {
@@ -25,7 +26,7 @@ export const Button: React.FC<ButtonProps> = ({ onClick, children, variant = 'se
     return (
         <button
             onClick={onClick}
-            className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]}`}
+            className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className || ''}`}
         >
             {icon && <span className="mr-2 -ml-1 h-5 w-5">{icon}</span>}
             {children}
