@@ -50,12 +50,42 @@ export const InstructionsModal: React.FC<InstructionsModalProps> = ({ isOpen, on
                     </div>
 
                     <div>
-                        <h3 className="text-xl font-semibold text-white mb-2">Step 2: Add Web Assets to Your Project</h3>
-                         <ol className="list-decimal list-inside space-y-1 pl-4">
-                            <li>To generate the static web files, you would typically run a build command like <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">npm run build</code>. In this environment, you would first need to save the current files (`index.html`, `index.tsx`, etc.) and compile the TypeScript to JavaScript.</li>
-                            <li>In Android Studio, switch to the "Project" view in the left-hand pane.</li>
-                            <li>Right-click on the <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">app</code> module and select <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">New &gt; Folder &gt; Assets Folder</code>.</li>
-                            <li>Copy your web application files (e.g., <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">index.html</code> and the compiled JavaScript) into this newly created <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">assets</code> folder.</li>
+                        <h3 className="text-xl font-semibold text-white mb-2">Step 2: Get The Static Web Files</h3>
+                        <p className="mb-2">This web app runs in a special environment that doesn't use a traditional build step (like <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">npm run build</code>). To get the files for your Android app, you'll need to save them directly from your browser:</p>
+                         <ol className="list-decimal list-inside space-y-3 pl-4">
+                            <li>
+                                <strong>Save the HTML file:</strong>
+                                <ul className="list-disc list-inside pl-4 mt-1 space-y-1 text-gray-400">
+                                    <li>Right-click anywhere on this page and select "View Page Source".</li>
+                                    <li>Copy the entire source code you see.</li>
+                                    <li>Save it into a new file named <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">index.html</code>.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Save the JavaScript file:</strong>
+                                <ul className="list-disc list-inside pl-4 mt-1 space-y-1 text-gray-400">
+                                    <li>Open your browser's Developer Tools (usually by pressing F12 or Ctrl+Shift+I).</li>
+                                    <li>Go to the "Sources" or "Debugger" tab.</li>
+                                    <li>Find the <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">index.tsx</code> file in the file navigator. The browser shows a compiled JavaScript version.</li>
+                                    <li>Copy the entire content of this compiled file.</li>
+                                    <li>Save it into a new file named <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">index.js</code>.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Update the HTML file:</strong>
+                                 <ul className="list-disc list-inside pl-4 mt-1 space-y-1 text-gray-400">
+                                    <li>Open your saved <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">index.html</code> file.</li>
+                                    <li>Find the line <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">&lt;script type="module" src="/index.tsx"&gt;&lt;/script&gt;</code>.</li>
+                                    <li>Change it to <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">&lt;script type="module" src="./index.js"&gt;&lt;/script&gt;</code> to point to your new JavaScript file.</li>
+                                </ul>
+                            </li>
+                             <li>
+                                <strong>Place files in Android Studio:</strong>
+                                <ul className="list-disc list-inside pl-4 mt-1 space-y-1 text-gray-400">
+                                    <li>In Android Studio, create an <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">assets</code> folder inside <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">app/src/main/</code> if it doesn't exist.</li>
+                                    <li>Copy your new <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">index.html</code> and <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">index.js</code> files into this <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">assets</code> folder.</li>
+                                </ul>
+                            </li>
                         </ol>
                     </div>
 
