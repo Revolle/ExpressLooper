@@ -117,23 +117,35 @@ export const InstructionsModal: React.FC<InstructionsModalProps> = ({ isOpen, on
                     <div>
                         <h3 className="text-xl font-semibold text-white mb-2">Step 4: Configure the WebView in Your Activity</h3>
                         <p>Open <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">app/src/main/java/com/yourpackagename/MainActivity.kt</code> and modify it to load your web app.</p>
+                        <p className="mt-2 text-gray-400">
+                           A quick tip: you might see an error on the letter <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">R</code> in <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">R.layout.activity_main</code>. To fix this, click on the red <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">R</code> and press <code className="text-white bg-gray-600 px-1 rounded-md">Alt + Enter</code> (or <code className="text-white bg-gray-600 px-1 rounded-md">Option + Enter</code> on Mac) and select "Import".
+                        </p>
+                        <p className="mt-2 text-gray-400">
+                            You will also see a security lint warning on <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">javaScriptEnabled = true</code>. This is important, but safe to do here because we are only loading local files we trust from the app's <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">assets</code> folder. The best practice is to add an annotation to acknowledge you've reviewed this, which I've included in the code below.
+                        </p>
                         <CodeBlock language="kotlin">{`package com.yourpackagename // Replace with your package name
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.webkit.PermissionRequest
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
+// If 'R' below is red, click on it and press Alt+Enter (Option+Enter on Mac)
+// to import it. It should add a line like:
+import com.yourpackagename.R
 
 class MainActivity : AppCompatActivity() {
+    @SuppressLint("SetJavaScriptEnabled") // Added to acknowledge the security warning
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val myWebView: WebView = findViewById(R.id.webview)
 
-        // Enable JavaScript and LocalStorage
+        // Enable JavaScript and LocalStorage. This is required for the React app to work.
+        // It's safe here because we are only loading local files from assets.
         myWebView.settings.javaScriptEnabled = true
         myWebView.settings.domStorageEnabled = true
 
@@ -165,6 +177,30 @@ class MainActivity : AppCompatActivity() {
                         <h3 className="text-xl font-semibold text-white mb-2">Step 6: Build and Run</h3>
                         <p>You can now build and run your application on an emulator or a physical Android device. It will display your web application full-screen.</p>
                     </div>
+
+                    <div className="pt-4 border-t border-gray-700">
+                        <h3 className="text-xl font-semibold text-white mb-2">Step 7: Troubleshooting Common Issues</h3>
+                        <h4 className="text-lg font-medium text-white/90 mt-4 mb-2">Problem: The app closes immediately after launching.</h4>
+                        <p className="mb-2">This usually means there was a runtime error. The best way to find the error is to use Android Studio's <strong className="text-white">Logcat</strong> tool.</p>
+                        <ol className="list-decimal list-inside space-y-2 pl-4">
+                            <li>At the bottom of the Android Studio window, click on the <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">Logcat</code> tab.</li>
+                            <li>Make sure your device and your app's package name (e.g., <code className="text-white">com.yourpackagename</code>) are selected in the dropdowns at the top of the Logcat window.</li>
+                            <li>In the search bar to the right of the dropdowns, type <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">level:error</code> to filter for only error messages.</li>
+                            <li>Run your app again. When it closes, look at Logcat for any new red error messages.</li>
+                        </ol>
+
+                        <h4 className="text-lg font-medium text-white/90 mt-6 mb-2">Common Error Message & Fix</h4>
+                        <p>The most frequent error you'll see is:</p>
+                        <CodeBlock language="none">{`net::ERR_FILE_NOT_FOUND`}</CodeBlock>
+                        <p>This error means the <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">WebView</code> could not find your local files. Carefully check these things:</p>
+                        <ul className="list-disc list-inside space-y-2 pl-4 text-gray-400">
+                            <li>Is the assets folder correctly located at <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">app/src/main/assets</code>?</li>
+                            <li>Are your files named <strong className="text-white">exactly</strong> <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">index.html</code> and <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">index.js</code>? File names are case-sensitive.</li>
+                            <li>Are both files placed <strong className="text-white">directly inside</strong> the <code className="text-[#A5C9FF] bg-gray-700 px-1 rounded-md">assets</code> folder, not in a subfolder?</li>
+                        </ul>
+                        <p className="mt-3">Fixing any of the above issues and re-running the app should solve the problem.</p>
+                    </div>
+
                 </div>
             </div>
         </div>
